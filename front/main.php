@@ -117,24 +117,34 @@
       $(".poster").eq(rank).show()
 
       let slider = setInterval(() => {
-
         animater();
-
-        // rank++;
-        // if(rank>$(".poster").length-1){
-        //   rank = 0;
-        // }
-        // $(".poster").hide();
-        // $(".poster").eq(rank).show();
-
       }, 2000)
 
-      function animater() {
+      $(".btns").hover(
+        function() {
+          clearInterval(slider);// 滑鼠進入時，停止輪播
+        },
+        function() {
+          slider = setInterval(() => {
+            animater();// 滑鼠離開時，重新啟動輪播
+          }, 2000)
+        }
+      )
 
+      $(".poster-btn").on("click",function(){
+        let idx=$(this).index();
+        animater(idx);
+      })
+
+      function animater(r) {
         let now = $(".poster:visible");
-        rank++;
-        if (rank > $(".poster").length - 1) {
-          rank = 0;
+        if (r == undefined) {
+          rank++;
+          if (rank > $(".poster").length - 1) {
+            rank = 0;
+          }
+        } else {
+          rank = r;
         }
 
         let next = $(".poster").eq(rank);
@@ -165,27 +175,27 @@
       }
 
       let p = 0;
-      $(".left,.right").on("click",function(){
-        let arrow=$(this).attr('class');
+      $(".left,.right").on("click", function() {
+        let arrow = $(this).attr('class');
 
-        switch(arrow){
+        switch (arrow) {
           case 'left':
-            if(p>0){
+            if (p > 0) {
               p--;
             }
-          break;
+            break;
           case 'right':
-            if(p < $(".poster-btn").length-4){
+            if (p < $(".poster-btn").length - 4) {
               p++;
             }
-          break;
+            break;
         }
 
-        $(".poster-btn").animate({right:p*80},500);
+        $(".poster-btn").animate({
+          right: p * 80
+        }, 500);
 
       })
-
-
     </script>
 
 
