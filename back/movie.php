@@ -9,6 +9,7 @@
         box-shadow: 0 0 3px #999;
         align-items: center;
         padding: 2px;
+        margin-bottom: 5px;
     }
 
     .movie>div:nth-child(1) {
@@ -35,6 +36,7 @@
     }
 
 </style>
+<div style="height:500px;overflow:auto;">
 <?php
     $movies = $Movie->all("order by `rank`");
     foreach($movies as $movie):
@@ -69,3 +71,4 @@
 <?php
 endforeach;
 ?>
+</div>
