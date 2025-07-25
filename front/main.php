@@ -63,6 +63,7 @@
         /* 用來控制當空間不足時，元素縮小的程度 : 0 (不能縮小) */
         flex-shrink: 0;
         font-size: 12px;
+        position: relative;
       }
 
       .poster-btn img {
@@ -138,7 +139,7 @@
 
         let next = $(".poster").eq(rank);
         let ani = $(now).data('ani');
-        console.log(ani);
+        // console.log(ani);
         switch (ani) {
           case 1:
             //淡入淡出
@@ -162,6 +163,29 @@
         }
 
       }
+
+      let p = 0;
+      $(".left,.right").on("click",function(){
+        let arrow=$(this).attr('class');
+
+        switch(arrow){
+          case 'left':
+            if(p>0){
+              p--;
+            }
+          break;
+          case 'right':
+            if(p < $(".poster-btn").length-4){
+              p++;
+            }
+          break;
+        }
+
+        $(".poster-btn").animate({right:p*80},500);
+
+      })
+
+
     </script>
 
 
