@@ -42,7 +42,7 @@
         $prev = ($idx - 1 >= 0) ? $movies[$idx - 1]['id'] : $movie['id'];
         $next = ($idx + 1 < count($movies)) ? $movies[$idx + 1]['id'] : $movie['id'];
     ?>
-        ?>
+        
         <div class="movie">
             <div>
                 <img src="./image/<?= $movie['poster']; ?>" style="width: 60px; height: 80px; border: 2px solid #white;">
