@@ -1,4 +1,5 @@
-<h3 class="ct">線上訂票</h3>
+<h3 class='ct'>線上訂票</h3>
+
 <style>
     #orderForm {
         width: 50%;
@@ -17,11 +18,12 @@
         text-align: right;
     }
 
-    #orderForm td:nth-child(2) select{
+    #orderForm td:nth-child(2) select {
         width: 98%;
         text-align: left;
     }
 </style>
+
 <table id='orderForm'>
     <tr>
         <td>電影：</td>
@@ -29,7 +31,7 @@
     </tr>
     <tr>
         <td>日期：</td>
-        <td><select name="data" id="date"></select></td>
+        <td><select name="date" id="date"></select></td>
     </tr>
     <tr>
         <td>場次：</td>
@@ -42,17 +44,46 @@
 </div>
 
 <script>
-let url =new URLSearchParams(location.search);
-getMovies();
+    let url=new URLSearchParams(location.search);
 
-function getMovies(){
-    let id = 0;
+    getMovies();
+
+    $("#movie").on("change",function(){
+        getDates($(this).val())
+    })
+    $("#date").on("change",function(){
+        getSessions($("#movie").val(),$(this).val())
+    })
+
+    function getMovies(){
+        let id=0
     if(url.has('id')){
         id=url.get('id');
     }
 
     $.get("./api/get_movies.php",{id},(movies)=>{
         $("#movie").html(movies)
+
+        getDates($("#movie").val());
     })
-}
+
+
+    }
+
+
+    function getDates(movieId){
+
+        $.get("./api/get_dates.php",{movieId},(dates)=>{
+            $("#date").html(dates)
+
+            getSessions(movieId,$("#date").val())
+        })
+
+    }
+
+    function getSessions(movieId , date){
+        $.get("./api/get_sessions.php",{movieId,date},(sessions)=>{
+            $("#session").html(sessions)
+        })
+    }
 </script>
