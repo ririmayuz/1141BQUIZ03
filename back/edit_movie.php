@@ -41,7 +41,7 @@
                                 <?php
                                 for ($i = 1; $i <= 12; $i++) {
                                     $selected=($ondate['1']==$i)?'selected':'';
-                                    echo "<option value='$i'>$i</option>";
+                                    echo "<option value='$i' $selected>$i</option>";
                                 }
                                 ?>
                             </select>月
@@ -49,7 +49,7 @@
                                 <?php
                                 for ($i = 1; $i <= 31; $i++) {
                                     $selected=($ondate['2']==$i)?'selected':'';
-                                    echo "<option value='$i'>$i</option>";
+                                    echo "<option value='$i' $selected>$i</option>";
                                 }
                                 ?>
                             </select>日
