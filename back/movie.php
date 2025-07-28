@@ -42,7 +42,7 @@
         $prev = ($idx - 1 >= 0) ? $movies[$idx - 1]['id'] : $movie['id'];
         $next = ($idx + 1 < count($movies)) ? $movies[$idx + 1]['id'] : $movie['id'];
     ?>
-        
+
         <div class="movie">
             <div>
                 <img src="./image/<?= $movie['poster']; ?>" style="width: 60px; height: 80px; border: 2px solid #white;">
@@ -105,15 +105,28 @@
         })
     })
 
+    // 監聽所有 class="del-btn" 的按鈕，當它被點擊時執行以下函式
     $(".del-btn").on("click", function() {
-        let id = $(this).data("id")
 
-        if(confirm("確定刪除電影?")){
-            $.post("./api/del.php", {table:'Movie',id},()=>{
+        // 取得當前被點擊按鈕的 data-id 屬性值
+        // $(this) 代表當前被點擊的按鈕
+        // .data("id") 會抓取 <button data-id="123"> 裡的 123
+        let id = $(this).data("id");
+
+        // 彈出確認視窗，詢問使用者是否確定要刪除
+        if (confirm("確定刪除電影?")) {
+
+            // 使用 jQuery 的 $.post 發送 AJAX 請求到後端 del.php
+            // 傳送的資料是 {table:'Movie', id:id}
+            // 當刪除完成後，執行回呼函式 (=> { location.reload(); })
+            $.post("./api/del.php", {
+                table: 'Movie',
+                id
+            }, () => {
+
+                // 刪除成功後，重新整理頁面，讓最新資料顯示出來
                 location.reload();
             })
         }
-        
-    })
-
+    });
 </script>
