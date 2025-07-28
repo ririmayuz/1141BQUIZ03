@@ -1,5 +1,5 @@
 <div>
-    <form action="./api/add_movie.php" method="post" enctype="multipart/form-data">
+    <form action="./api/save_movie.php" method="post" enctype="multipart/form-data">
         <div style="display: flex;">
             <div>影片資料</div>
             <div>
@@ -14,10 +14,10 @@
                         <td class="ct">分級：</td>
                         <td>
                             <select name="level" id="level">
-                                <option value="1" <?= ($movie['level'] == 1) ? 'selected' : ''; ?>>普遍級</option>
-                                <option value="2" <?= ($movie['level'] == 2) ? 'selected' : ''; ?>>輔導級</option>
-                                <option value="3" <?= ($movie['level'] == 3) ? 'selected' : ''; ?>>保護級</option>
-                                <option value="4" <?= ($movie['level'] == 4) ? 'selected' : ''; ?>>限制級</option>
+                                <option value="1">普遍級</option>
+                                <option value="2">輔導級</option>
+                                <option value="3">保護級</option>
+                                <option value="4">限制級</option>
                             </select>
                         </td>
                     </tr>
@@ -31,8 +31,8 @@
                         <td>上映日期：</td>
                         <td>
                             <select name="year" id="year">
-                                <option value="2025" <?= ($movie['level'] == 2025) ? 'selected' : ''; ?>>2025</option>
-                                <option value="2026" <?= ($movie['level'] == 2026) ? 'selected' : ''; ?>>2026</option>
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
                             </select>年
                             <select name="month" id="month">
                                 <?php
