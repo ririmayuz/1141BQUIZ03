@@ -68,7 +68,7 @@
             <div>
                 <?=floor($i/5)+1;?>排<?=($i%5)+1;?>號
             </div>
-            <input type="checkbox" name="seat" value="<?$i;?>">
+            <input type="checkbox" name="seat" value="<?=$i;?>">
         </div>
         <?php
         endfor;
@@ -85,7 +85,7 @@
     <div class="order-info">
         <div>您選擇的電影是：</div>
         <div>您選擇的時刻是：</div>
-        <div>您已經勾選<span id="tickets">2</span>張票，最多可以購買四張票</div>
+        <div>您已經勾選<span id="tickets">0</span>張票，最多可以購買四張票</div>
     </div>
 
     <div class="ct">
@@ -93,3 +93,26 @@
         <button class='btn-order'>訂購</button>
     </div>
 </div>
+
+<script>
+    let selectedSeats=[];
+    $(".seat input[type='checkbox']").on("change",function(){
+        console.log($(this).prop("checked"),$(this).val());
+        if($(this).prop("checked")){
+            if(selectedSeats.length <4){
+                selectedSeats.push($(this).val());
+                // $(this).parent().removeClass("null").addClass("booked");
+            }else{
+                alert("最多只能選擇四張票");
+                $(this).prop("checked",false);
+            }
+        }else{
+            //splice 切片
+            //indexOf查找第幾個位置,刪掉1個
+            selectedSeats.splice(selectedSeats.indexOf($(this).val()),1);
+            //  $(this).parent().removeClass("booked").addClass("null");
+        }
+        console.log(selectedSeats);
+        $("#tickets").text(selectedSeats.length);
+    })
+</script>
