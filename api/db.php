@@ -177,3 +177,4 @@ private function arraytosql($array){
 
 $Poster=new DB("posters");
 $Movie=new DB("movies");
+$Order=new DB("orders");
