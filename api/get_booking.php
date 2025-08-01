@@ -40,11 +40,21 @@
         bottom: 5px;
         right: 5px;
     }
+    
+    /* 對照格子用 */
     .seat:nth-child(odd){
         width: 64px;
         height: 86px;
         box-sizing: border-box;
         /* background: #eee; */
+    }
+
+    .booked {
+        background: url("./icon/03D03.png") no-repeat center;
+    }
+
+    .null {
+        background: url("./icon/03D02.png") no-repeat center;
     }
 </style>
 
@@ -52,8 +62,9 @@
     <div id="seats">
         <?php
         for($i=0;$i<20;$i++):
+            $booked='null';
         ?>
-        <div class="seat">
+        <div class="seat <?=$booked;?>">
             <div>
                 <?=floor($i/5)+1;?>排<?=($i%5)+1;?>號
             </div>
@@ -64,6 +75,11 @@
         ?>
     </div>
 </div>
+<!-- 1排1號 ->  -->
+<!-- 1排2號 ->  -->
+<!-- 1排3號 ->  -->
+<!-- 1排4號 ->  -->
+<!-- 1排5號 ->  -->
 
 <div class="info-box">
     <div class="order-info">
