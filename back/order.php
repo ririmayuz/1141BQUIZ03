@@ -20,11 +20,10 @@
         display: flex;
         justify-content: space-between;
         margin-top: 5px;
-
     }
 
     .list-col div {
-        width: calc(98% / 7);
+        width: calc(98%/7);
         background: #eee;
         padding: 2px 5px;
         box-sizing: border-box;
@@ -38,7 +37,7 @@
     }
 
     .list-data div {
-        width: calc(98% / 7);
+        width: calc(98%/7);
         padding: 2px 5px;
         box-sizing: border-box;
     }
@@ -68,21 +67,24 @@
             <div><?= $order['date']; ?></div>
             <div><?= $order['session']; ?></div>
             <div><?= $order['tickets']; ?></div>
-            <div><?php
-                    $seats = unserialize($order['seats']);
-                    sort($seats);
-                    foreach ($seats as $seat) {
-                        echo floor($seat / 5) + 1 . "排" . ($seat % 5) + 1 . "號<br>";
-                    }
-
-
-                    ?></div>
+            <div>
+                <?php
+                $seats = unserialize($order['seats']);
+                sort($seats);
+                foreach ($seats as $seat) {
+                    echo floor($seat / 5) + 1 . "排" . ($seat % 5) + 1 . "號<br>";
+                }
+                ?>
+            </div>
             <div>
                 <button class='btn-del' data-id="<?= $order['id']; ?>">刪除</button>
             </div>
         </div>
         <hr>
-    <?php endforeach; ?>
+
+    <?php
+    endforeach;
+    ?>
 </div>
 <script>
     $(".btn-del").on("click", function() {

@@ -9,6 +9,7 @@
     box-shadow:0 0 3px #999;
     align-items: center;
     padding:2px;
+    margin-bottom: 5px;
 
 }
 .movie > div:nth-child(1){
@@ -27,10 +28,13 @@
     width: 33%;
 }
 </style>
+<div style="height:500px;overflow:auto;">
 <?php
 $movies = $Movie->all(" order by `rank`");
 
-foreach($movies as $movie):
+foreach($movies as $idx => $movie):
+    $prev=($idx-1>=0)?$movies[$idx-1]['id']:$movie['id'];
+    $next=($idx+1<count($movies))?$movies[$idx+1]['id']:$movie['id'];
 ?>
 
 <div class="movie">
@@ -47,11 +51,11 @@ foreach($movies as $movie):
         <div>上映時間:<?=$movie['ondate'];?></div>
     </div>
     <div>
-        <button>顯示</button>
-        <button>往上</button>
-        <button>往下</button>
-        <button>編輯電影</button>
-        <button>刪除電影</button>
+        <button class='show-btn' data-id="<?=$movie['id']?>"><?=($movie['sh']==1)?'顯示':'隱藏';?></button>
+        <button class="sw-btn" data-sw='<?=$prev;?>' data-id="<?=$movie['id'];?>">往上</button>
+        <button class="sw-btn" data-sw='<?=$next;?>' data-id="<?=$movie['id'];?>">往下</button>
+        <button onclick="location.href='?do=edit_movie&id=<?=$movie['id']?>'">編輯電影</button>
+        <button class='del-btn' data-id="<?=$movie['id']?>">刪除電影</button>
     </div>
     <div>
         劇情介紹:<?=$movie['intro'];?>
@@ -59,5 +63,44 @@ foreach($movies as $movie):
 </div>
 
 </div>
-<hr>
+
 <?php endforeach; ?>
+
+
+</div>
+
+<script>
+$(".show-btn").on("click",function(){
+    let id=$(this).data("id");
+    $.post("api/show_movie.php",{id},()=>{
+        //location.reload();
+        switch($(this).text()){
+            case "顯示":
+                $(this).text("隱藏");
+                break;
+            case "隱藏":
+                $(this).text("顯示");
+                break;
+        }
+    })
+})
+
+$(".sw-btn").on("click",function(){
+    let id=$(this).data("id")
+    let sw=$(this).data("sw")
+    $.post("./api/sw.php",{table:'Movie',id,sw},(res)=>{
+        location.reload();
+    })
+})
+
+
+$(".del-btn").on("click",function(){
+    let id=$(this).data("id");
+
+    if(confirm("確定要刪除這部電影嗎?")){
+        $.post("./api/del.php",{table:'Movie',id},()=>{
+            location.reload();
+        })
+    }
+})
+</script>

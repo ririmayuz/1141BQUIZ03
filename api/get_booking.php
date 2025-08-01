@@ -58,7 +58,9 @@
         background: url("./icon/03D02.png") no-repeat center;
     }
 </style>
+<?php
 
+?>
 <div class="booking-box">
     <div id="seats">
         <?php

@@ -2,7 +2,7 @@
 
 $id=$_GET['movieId'];
 $date=$_GET['date'];
-$movies=$Movie->find($id);
+$movie=$Movie->find($id);
 // $ondate=strtotime($movies['ondate']);
 // $today=strtotime(date("Y-m-d"));
 
@@ -14,7 +14,8 @@ if($date==date("Y-m-d") && $hr>13){
 
 
 for($i=$start;$i<5;$i++){
-  $remaining=20; //假設每場剩餘20座位-已被訂走的座位數
+  //假設每場剩餘20座位-已被訂走的座位數
+   $remaining=20-$Order->sum('tickets',['movie'=>$movie['name'],'date'=>$date,'session'=>$sessStr[$i]]);
   echo "<option value='$sessStr[$i]'>";
   echo $sessStr[$i];
   echo " 剩餘座位 ";
