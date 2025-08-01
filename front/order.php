@@ -53,6 +53,7 @@
 
 
 <script>
+    //把目前網址中所有參數抓出來，放進 url 這個變數中，方便後續查詢
     let url = new URLSearchParams(location.search);
 
     getMovies();
@@ -68,8 +69,9 @@
     //按鈕切換
     /* $(".btn-submit, .btn-prev").on('click',function(){
     $('#orderForm,#booking').toggle();
-}) */
+    }) */
     $(".btn-submit").on("click", function() {
+        //$.get(url, data, callback)
         $.get("./api/get_booking.php",{
             id:$("#movie").val(),
             date:$("#date").val(),
@@ -93,9 +95,7 @@
             id = url.get('id');
         }
 
-        $.get("./api/get_movies.php", {
-            id
-        }, (movies) => {
+        $.get("./api/get_movies.php", {id}, (movies) => {
             $("#movie").html(movies)
 
             getDates($("#movie").val());
@@ -107,9 +107,7 @@
 
     function getDates(movieId) {
 
-        $.get("./api/get_dates.php", {
-            movieId
-        }, (dates) => {
+        $.get("./api/get_dates.php", {movieId}, (dates) => {
             $("#date").html(dates)
 
             getSessions(movieId, $("#date").val())

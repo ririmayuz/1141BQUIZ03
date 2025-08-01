@@ -14,10 +14,55 @@
         padding: 10px 70px;
         box-sizing: border-box;
     }
+
+    #seats {
+        display: flex;
+        flex-wrap: wrap;/* 自動斷行 */
+        width: 320px;
+        height: 344px;
+        margin: 0 auto;
+        padding-top: 18px;
+    }
+
+    .seat{
+        width: 64px;
+        height: 86px;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 2px;
+        /* background: #ddd; */
+        /* opacity: 0.7; */
+        position: relative;
+    }
+
+    .seat input[type="checkbox"] {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+    }
+    .seat:nth-child(odd){
+        width: 64px;
+        height: 86px;
+        box-sizing: border-box;
+        /* background: #eee; */
+    }
 </style>
 
 <div class="booking-box">
-
+    <div id="seats">
+        <?php
+        for($i=0;$i<20;$i++):
+        ?>
+        <div class="seat">
+            <div>
+                <?=floor($i/5)+1;?>排<?=($i%5)+1;?>號
+            </div>
+            <input type="checkbox" name="seat" value="<?$i;?>">
+        </div>
+        <?php
+        endfor;
+        ?>
+    </div>
 </div>
 
 <div class="info-box">
