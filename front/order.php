@@ -66,15 +66,26 @@
 
 
     //按鈕切換
+    /* $(".btn-submit, .btn-prev").on('click',function(){
+    $('#orderForm,#booking').toggle();
+}) */
     $(".btn-submit").on("click", function() {
+        $.get("./api/get_booking.php",{
+            id:$("#movie").val(),
+            date:$("#date").val(),
+            session:$("#session").val()
+        },(booking)=>{
+            $("#booking").html(booking);
+            $(".btn-prev").on("click", function() {
+                $("#booking").hide();
+                $("#orderForm").show();
+            })
+        })
+
         $("#orderForm").hide();
         $("#booking").show();
     })
 
-    $(".btn-prev").on("click", function() {
-        $("#booking").hide();
-        $("#orderForm").show();
-    })
 
     function getMovies() {
         let id = 0
