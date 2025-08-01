@@ -1,7 +1,5 @@
-<h3 class='ct'>線上訂票</h3>
-
 <style>
-    #orderForm {
+    #orderTable {
         width: 50%;
         margin: 10px auto;
         padding: 20px;
@@ -9,80 +7,110 @@
         background: #aaa;
     }
 
-    #orderForm td {
+    #orderTable td {
         background: #ccc;
     }
 
-    #orderForm td:nth-child(1) {
+    #orderTable td:nth-child(1) {
         width: 20%;
         text-align: right;
     }
 
-    #orderForm td:nth-child(2) select {
+    #orderTable td:nth-child(2) select {
         width: 98%;
         text-align: left;
     }
 </style>
 
-<table id='orderForm'>
-    <tr>
-        <td>電影：</td>
-        <td><select name="movie" id="movie"></select></td>
-    </tr>
-    <tr>
-        <td>日期：</td>
-        <td><select name="date" id="date"></select></td>
-    </tr>
-    <tr>
-        <td>場次：</td>
-        <td><select name="session" id="session"></select></td>
-    </tr>
-</table>
-<div class="ct">
-    <button>確定</button>
-    <button>重置</button>
+<div id="orderForm">
+    <h3 class='ct'>線上訂票</h3>
+    <table id='orderTable'>
+        <tr>
+            <td>電影：</td>
+            <td><select name="movie" id="movie"></select></td>
+        </tr>
+        <tr>
+            <td>日期：</td>
+            <td><select name="date" id="date"></select></td>
+        </tr>
+        <tr>
+            <td>場次：</td>
+            <td><select name="session" id="session"></select></td>
+        </tr>
+    </table>
+    <div class="ct">
+        <button class='btn-submit'>確定</button>
+        <button class='btn-reset'>重置</button>
+    </div>
 </div>
 
+<div id="booking" style="display:none;">
+
+    <button class='btn-prev'>上一步</button>
+    <button class='btn-order'>訂購</button>
+
+</div>
+
+
 <script>
-    let url=new URLSearchParams(location.search);
+    let url = new URLSearchParams(location.search);
 
     getMovies();
 
-    $("#movie").on("change",function(){
+    $("#movie").on("change", function() {
         getDates($(this).val())
     })
-    $("#date").on("change",function(){
-        getSessions($("#movie").val(),$(this).val())
-    })
-
-    function getMovies(){
-        let id=0
-    if(url.has('id')){
-        id=url.get('id');
-    }
-
-    $.get("./api/get_movies.php",{id},(movies)=>{
-        $("#movie").html(movies)
-
-        getDates($("#movie").val());
+    $("#date").on("change", function() {
+        getSessions($("#movie").val(), $(this).val())
     })
 
 
+    //按鈕切換
+    $(".btn-submit").on("click", function() {
+        $("#orderForm").hide();
+        $("#booking").show();
+    })
+
+    $(".btn-prev").on("click", function() {
+        $("#booking").hide();
+        $("#orderForm").show();
+    })
+
+    function getMovies() {
+        let id = 0
+        if (url.has('id')) {
+            id = url.get('id');
+        }
+
+        $.get("./api/get_movies.php", {
+            id
+        }, (movies) => {
+            $("#movie").html(movies)
+
+            getDates($("#movie").val());
+        })
+
+
     }
 
 
-    function getDates(movieId){
+    function getDates(movieId) {
 
-        $.get("./api/get_dates.php",{movieId},(dates)=>{
+        $.get("./api/get_dates.php", {
+            movieId
+        }, (dates) => {
             $("#date").html(dates)
 
-            getSessions(movieId,$("#date").val())
+            getSessions(movieId, $("#date").val())
         })
 
     }
 
-    function getSessions(movieId , date){
-        $.get("./api/get_sessions.php",{movieId,date},(sessions)=>{
+    function getSessions(movieId, date) {
+        $.get("./api/get_sessions.php", {
+            movieId,
+            date
+        }, (sessions) => {
             $("#session").html(sessions)
         })
     }
